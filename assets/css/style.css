@@ -1,0 +1,39 @@
+body {
+    background-color: #15294d;
+    color: white;
+    font-family: "K2D", Arial, Helvetica, sans-serif;
+}
+
+button {
+    background-color: white;
+    font-family: "K2D", Arial, Helvetica, sans-serif;
+    border-radius: 4px;
+    width: 120px;
+    height: 30px;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: maroon;
+}
+
+#superhero-form {
+    float: right;
+    position: relative;
+    top: 50px;
+}
+
+#add-hero {
+    background-color: white;
+    font-family: "K2D", Arial, Helvetica, sans-serif;
+    border-radius: 4px;
+    width: 120px;
+    height: 30px;
+    margin: 10px; 
+    position: absolute;
+    right: 30px;
+}
+
+#add-hero:hover {
+    background-color: maroon;
+}
