@@ -23,75 +23,126 @@ $(document).ready(function() {
            
             $("#superhero-buttons").append(a);
           }
-        }
+        } 
+
+        renderButtons(topics, "#superhero-buttons");
+
+        
+        $("button").on("click", function(){
+            $("#gifs-display").empty();
+            $("button").removeClass("active");
+            $(this).addClass("active");
+           var character = $(this).attr("data-character");
+
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + 
+            character + "&api_key=jOJwC3HUpgDGziYvS8lj6sjI6emNkzOj&limit=10";
+            console.log(queryURL);
+
+            
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function(response) {
+
+                var results = response.data;
+
+                console.log(response.data);
+            
+            
+                for (var i = 0; i < results.length; i++) {
+                    var gifDiv = $("<div>");
+                    var rating = results[i].rating;
+                    var ratingDisplay = $("<p>").text("Rating: " + rating);
+
+                    var animate = results[i].images.fixed_height.url;
+                    var still = results[i].images.fixed_height_still.url;
+                
+
+                    var heroImage = $("<img>");
+                    heroImage.attr("src", still);
+                    heroImage.attr("data-still", still);
+                    heroImage.attr("data-animate", animate);
+                    heroImage.attr("data-state", "still");
+                    heroImage.addClass("hero-image");
+
+                    gifDiv.append(ratingDisplay);
+                    gifDiv.append(heroImage);
+                    $("#gifs-display").prepend(gifDiv);
+
+
+                }
+                
+    
+            });
+
+        });
+
+
 
         $("#add-hero").on("click", function(event) {
             
             event.preventDefault();
+        
+               
+            var newHero = $("#hero-input").eq(0).val();
     
-           
-            var newHero = $("input").eq(0).val();
-
             if (newHero.length > 2) {
-            topics.push(newHero);
+              topics.push(newHero);
             }
-         
+             
             renderButtons(topics, "hero-button", "#superhero-buttons");
-        });
+
+            $("button").on("click", function(){
+                $("#gifs-display").empty();
+                $("button").removeClass("active");
+                $(this).addClass("active");
+               var character = $(this).attr("data-character");
     
-            renderButtons(topics, "hero-button", "#superhero-buttons");
-
-
-    $("button").on("click", function(){
-        $("#gifs-display").empty();
-        $("button").removeClass("active");
-        $(this).addClass("active");
-    var character = $(this).attr("data-character");
-
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + 
-        character + "&api_key=jOJwC3HUpgDGziYvS8lj6sjI6emNkzOj&limit=10";
-        console.log(queryURL);
-
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + 
+                character + "&api_key=jOJwC3HUpgDGziYvS8lj6sjI6emNkzOj&limit=10";
+                console.log(queryURL);
         
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function(response) {
 
-            var results = response.data;
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function(response) {
 
-            console.log(response.data);
-           
-        
-            for (var i = 0; i < results.length; i++) {
-                var gifDiv = $("<div>");
-                var rating = results[i].rating;
-                var ratingDisplay = $("<p>").text("Rating: " + rating);
+                    var results = response.data;
 
-                var animate = results[i].images.fixed_height.url;
-                var still = results[i].images.fixed_height_still.url;
+                    console.log(response.data);
+                
+                
+                    for (var i = 0; i < results.length; i++) {
+                        var gifDiv = $("<div>");
+                        var rating = results[i].rating;
+                        var ratingDisplay = $("<p>").text("Rating: " + rating);
+
+                        var animate = results[i].images.fixed_height.url;
+                        var still = results[i].images.fixed_height_still.url;
+                    
+
+                        var heroImage = $("<img>");
+                        heroImage.attr("src", still);
+                        heroImage.attr("data-still", still);
+                        heroImage.attr("data-animate", animate);
+                        heroImage.attr("data-state", "still");
+                        heroImage.addClass("hero-image");
+
+                        gifDiv.append(ratingDisplay);
+                        gifDiv.append(heroImage);
+                        $("#gifs-display").prepend(gifDiv);
+
+
+                    }
+                    
+    
+                });
             
-
-                var heroImage = $("<img>");
-                heroImage.attr("src", still);
-                heroImage.attr("data-still", still);
-                heroImage.attr("data-animate", animate);
-                heroImage.attr("data-state", "still");
-                heroImage.addClass("hero-image");
-               // heroImage.attr("src", results[i].images.fixed_height_still.url);
-                //heroImage.attr("src", results[i].images.fixed_height.url);
-
-                gifDiv.append(ratingDisplay);
-                gifDiv.append(heroImage);
-                $("#gifs-display").prepend(gifDiv);
+            });
 
 
-            }
         });
-
-    });
-
-
             $(document).on("click", ".hero-image", function() {
                 
                 var state = $(this).attr("data-state");
@@ -105,5 +156,31 @@ $(document).ready(function() {
                     $(this).attr("data-state", "still");
                 }
             });
+
+
+
+
+
+               // (newHero).on("click", function(event) {
+
+                 //   event.preventDefault();
+
+                  //  queryURL = "https://api.giphy.com/v1/gifs/search?q=" + 
+                  //  character + "&api_key=jOJwC3HUpgDGziYvS8lj6sjI6emNkzOj&limit=10";
+                  //  console.log(queryURL);
+            
+                    
+                  //  $.ajax({
+                  //      url: queryURL,
+                   //     method: "GET"
+                  //  }).then(function(response) {
+            
+                   //     results = response.data;
+            
+                   //     console.log(response.data);
+                  //  })  
+
+                    
+              //  })
 
 });
