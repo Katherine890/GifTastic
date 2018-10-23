@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     var topics = [
         "Batman", "Robin", "Superman", "The Flash", "Green Arrow", "Black Canary", "Aquaman", 
-        "Spider-Man", "Speedy", "Black Panther", "Wolverine", "DareDevil", "Wonder Woman", 
+        "Spider-Man", "Black Panther", "Wolverine", "DareDevil", "Wonder Woman", 
         "Black Widow", "DeadPool", "Captain America", "Iron Man", "Catwoman", 
         "Wolverine", "Storm", "Jean Grey"
     ];
@@ -30,21 +30,22 @@ $(document).ready(function() {
             event.preventDefault();
     
            
-            var hero = $("#hero-input").val();
-            
-            topics.push(hero);
-    
+            var newHero = $("input").eq(0).val();
+
+            if (newHero.length > 2) {
+            topics.push(newHero);
+            }
          
-            renderButtons();
+            renderButtons(topics, "hero-button", "#superhero-buttons");
         });
     
-            renderButtons();
+            renderButtons(topics, "hero-button", "#superhero-buttons");
 
 
     $("button").on("click", function(){
-        //$("#gifs-display").empty();
-       // $("button").removeClass("active");
-       // $(this).addClass("active");
+        $("#gifs-display").empty();
+        $("button").removeClass("active");
+        $(this).addClass("active");
     var character = $(this).attr("data-character");
 
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + 
@@ -66,8 +67,20 @@ $(document).ready(function() {
                 var gifDiv = $("<div>");
                 var rating = results[i].rating;
                 var ratingDisplay = $("<p>").text("Rating: " + rating);
+
+                var animate = results[i].images.fixed_height.url;
+                var still = results[i].images.fixed_height_still.url;
+            
+
                 var heroImage = $("<img>");
-                heroImage.attr("src", results[i].images.fixed_height.url);
+                heroImage.attr("src", still);
+                heroImage.attr("data-still", still);
+                heroImage.attr("data-animate", animate);
+                heroImage.attr("data-state", "still");
+                heroImage.addClass("hero-image");
+               // heroImage.attr("src", results[i].images.fixed_height_still.url);
+                //heroImage.attr("src", results[i].images.fixed_height.url);
+
                 gifDiv.append(ratingDisplay);
                 gifDiv.append(heroImage);
                 $("#gifs-display").prepend(gifDiv);
@@ -79,5 +92,18 @@ $(document).ready(function() {
     });
 
 
+            $(document).on("click", ".hero-image", function() {
+                
+                var state = $(this).attr("data-state");
+
+                if (state === "still") {
+                    $(this).attr("src", $(this).attr("data-animate"));
+                    $(this).attr("data-state", "animate");
+
+                } else {
+                    $(this).attr("src", $(this).attr("data-still"));
+                    $(this).attr("data-state", "still");
+                }
+            });
 
 });

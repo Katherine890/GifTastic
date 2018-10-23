@@ -37,3 +37,7 @@ button:hover {
 #add-hero:hover {
     background-color: maroon;
 }
+
+#gifs-display {
+    width: 70%;
+}
