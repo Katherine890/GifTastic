@@ -2,7 +2,7 @@
 
 An app dedicated to superhero gifs using the Giphy API. An input box to add new superheroes is included. 
 
-This app allows users to search for gifs on superheroes and to also search for more superheroes not listed on the app.
+This app allows users to search for gifs on superheroes and to also search for more superheroes not listed on the app. By using AJAX calls, this calls to the Giphy API and searches Giphy for gifs relating to superheroes.
 
 The superhero searh is useful for those who are superhero fans (Marvel or DC), and seek entertainment. It's great for those who want to share relatable gifs of their favorite fictional characters.
 
